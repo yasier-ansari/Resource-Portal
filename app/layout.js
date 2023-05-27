@@ -1,7 +1,11 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import { Urbanist } from 'next/font/google'
+import { AuthContextProvider } from "@/hooks/AuthContext"
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+import IndexLayout from "@/components/IndexLayout"
+import { configureToast } from "@/util/toast";
+const urbanist = Urbanist({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Create Next App',
@@ -11,7 +15,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+      <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,800;0,900;1,100;1,200;1,300;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+      */}
+      <body className={` ${urbanist.className} min-h-screen w-full text-gray-800 `} >
+        <AuthContextProvider>
+          <IndexLayout >
+            {children}
+          </IndexLayout >
+          <ToastContainer />
+        </AuthContextProvider>
+      </body>
     </html>
   )
 }
