@@ -10,14 +10,17 @@ export const AuthContext = createContext({});
 
 export const AuthContextProvider = ({ children }) => {
     const [error, setError] = useState(false);
+    const [authReady, setAuthReady] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { session, setSession } = useSession();
 
     useEffect(() => {
+        setAuthReady(false);
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const res = await fetchUserProfile(user.uid);
+                setAuthReady(true);
                 setUserInfo(res);
                 // setUserInfo(res);
                 setSession(user);

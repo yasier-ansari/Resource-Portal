@@ -110,7 +110,7 @@ const Header = () => {
                                         </Link>
                                         <li className="hover:bg-gray-200 rounded-lg cursor-pointer">
                                             <button
-                                                className="block px-4 py-2 text-sm text-rose-500"
+                                                className="block px-4 py-2 text-sm text-orange-500"
                                                 onClick={handleLogout}
                                             >
                                                 Logout
@@ -124,7 +124,7 @@ const Header = () => {
                         <div className="flex space-x-3 text-base font-semibold px-3 py-[4px] lg:px-4 border-gray-700">
                             <button
                                 onClick={loginHandler}
-                                className="hidden bg-green-600/80 text-white md:block text-base font-bold rounded-xl px-3 py-1 md:py-2 lg:px-4 border-gray-700"
+                                className="hidden bg-zinc-100 text-black md:block text-base font-bold rounded-xl px-3 py-1 md:py-2 lg:px-4 border-gray-700"
                             >
                                 Log In
                             </button>
