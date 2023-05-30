@@ -16,7 +16,7 @@ const IndexLayout = ({ children }) => {
     return (
         <>
             {/* <div className={`min-h-screen w-full relative ${isModalVisible ? "overflow-hidden" : ""}`}> */}
-            <div className="flex flex-col w-full min-h-screen bg-[#fffcf8]" >
+            <div className="flex flex-col w-full min-h-screen bg-[#ffffff]" >
                 {/* {isModalVisible && <Modal />} */}
                 {/* <main className={`bg-[#fffcf8] ${isModalVisible ? "filter blur-sm backdrop-blur-sm" : ""}`}> */}
                 <Header />

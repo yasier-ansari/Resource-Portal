@@ -2,7 +2,7 @@ import { db } from "./firebase/config";
 import { collection, query, getDocs, where } from "firebase/firestore";
 
 export const getData = async (slug) => {
-    const conSlug = slug.replace(/-/g, " ");
+    const conSlug = slug?.replace(/-/g, " ");
     const infoCollection = collection(db, 'AltData');
     const infoQuery = query(infoCollection, where('title', '==', conSlug));
     const infoSnapshot = await getDocs(infoQuery);

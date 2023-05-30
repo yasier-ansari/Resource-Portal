@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image";
 import { useContext, useState, useRef, useEffect } from "react";
-import { RxCaretDown } from 'react-icons/rx'
+import { FiChevronDown } from 'react-icons/fi'
 import { FiCommand, FiGitPullRequest } from "react-icons/fi";
 import { TbListDetails, TbInfoSquareRounded } from 'react-icons/tb'
 import { AuthContext } from "@/hooks/AuthContext";
@@ -60,13 +60,13 @@ const Header = () => {
     }, []);
 
     return (
-        <div className="bg-[#320760] text-white ">
-            <div className="flex font-sat font-semibold justify-between items-center py-4 mx-auto px-4 sm:px-6 md:px-8 lg:px-16 max-w-7xl md:py-6 ">
+        <div className="bg-[#320760] font-sat text-white ">
+            <div className="flex font- font-semibold justify-between items-center py-4 mx-auto px-4 sm:px-6 md:px-8 lg:px-16 max-w-7xl md:py-6 ">
                 <Link href="/" className="text-lg md:text-xl lg:text-2xl font-extrabold ">
                     <span className="text-[#fa8247]">re;</span>
                     po
                 </Link>
-                <div className="flex space-x-12 items-center justify-center text-base font-semibold">
+                <div className=" flex space-x-12 items-center justify-center text-base font-semibold">
                     <div className="flex items-center text-md md:text-lg font-bold " >
                         <TbInfoSquareRounded className="mr-2 w-4 h-4 md:w-5 md:h-5 " />
                         About
@@ -97,8 +97,8 @@ const Header = () => {
                                     alt='user image'
                                     className="rounded-full"
                                 />
-                                <RxCaretDown
-                                    className={` w-4 h-4 transition-all ease-linear duration-150 md:w-5 md:h-5 ${dropdownOpen ? 'rotate-180' : ''} `} />
+                                <FiChevronDown
+                                    className={` w-4 h-4 transition-all ease-in duration-300 md:h-5 md:w-5 stroke-[1.5px] md:stroke-2 ${dropdownOpen ? 'rotate-180' : ''} `} />
                             </button>
                             {dropdownOpen && (
                                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">

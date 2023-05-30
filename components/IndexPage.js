@@ -11,6 +11,7 @@ import Image from "next/image";
 import { db } from '@/util/firebase/config'
 import Img from '@/public/blo.jpg'
 import Footer from "./Footer";
+import RersourceCard from "./RersourceCard";
 
 const IndexPage = () => {
     // const [data, setData] = useState();
@@ -278,11 +279,11 @@ const IndexPage = () => {
             <>
                 <div className="min-h-[70vh]" >
                     <div className="px-4 sm:px-10 md:px-20 lg:px-32 mb-12 md:mb-16 lg:mb-0 mt-12 mx-auto text-center flex align-vertical content-start items-center justiy-center flex-col space-y-8 " >
-                        <div className=" text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold font-sat max-w-4xl " >
+                        <div className=" text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[84px] font-bold font-cal max-w-6xl " >
                             Find the <span className=" font-black bg-gradient-to-tr from-purple-500 to-sky-700 via-violet-800 bg-clip-text text-transparent " >right</span> resources
                             to elevate your <span className="font-black bg-gradient-to-br bg-clip-text text-transparent to-rose-500 from-orange-500  " >skills</span>
                         </div>
-                        <div className="pt-4 font-[450] text-base md:text-lg lg:text-xl max-w-3xl " >
+                        <div className="pt-4 font-regular text-base md:text-lg lg:text-xl max-w-3xl " >
                             {/* Want to learn new tech ? but dont know where to start ? surf through our curated list to get started */}
                             {/* Embark on your tech learning journey with confidence and efficiency using ExploreTech. Say goodbye to endless searching and welcome a curated collection of the best resources, empowering you to learn, grow, and stay ahead in the rapidly evolving tech world. Start your exploration today and unlock a world of technical knowledge at your fingertips. */}
                             Begin your tech learning journey with confidence and efficiency. Re-po provides curated resources to empower your growth and keep you ahead in the tech world.
@@ -386,37 +387,9 @@ const IndexPage = () => {
                                     filterData?.length !== 0 ? (
                                         filterData?.map((obj) => {
                                             return (
-                                                <div
-                                                    key={obj.id}
-                                                    className="flex flex-col group hover:border-green-500 hover:border-2 hover:scale-105 transition-all ease-linear bg-white rounded-2xl border-2 space-y-4 border-black/5 shadow-md w-[20rem] xl:w-[22rem] h-72 md:h-[20rem] lg:h-[22rem]"
-                                                >
-                                                    <Link
-                                                        href={`/resource/${obj.title.replace(/\s+/g, "-")}`}
-                                                        className="h-[60%] overflow-hidden p-2 md:p-3 lg:p-4 pb-0 md:pb-0 lg:pb-0"
-                                                    >
-                                                        <div className="h-full overflow-hidden group-hover:drop-shadow-sm shadow-black drop-shadow-md w-full rounded-[1.1rem] relative">
-                                                            <Image
-                                                                src={Img}
-                                                                fill
-                                                                alt="non"
-                                                                className="group-hover:shadow-md shadow-black drop-shadow-md group-hover:scale-105 transition-all ease-in"
-                                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                                            />
-                                                        </div>
-                                                    </Link>
-                                                    <div className="h-[40%] flex justify-start text-start flex-col px-3 md:px-4 lg:px-5">
-                                                        <div className="flex justify-between font-bold text-lg md:text-xl">
-                                                            <Link href={`/resource/${obj.title.replace(/\s+/g, "-")}`}>
-                                                                {obj.title}{" "}
-                                                                <sup className="font-medium text-xs">{obj.language.slice(0, 2).toLowerCase()}</sup>{" "}
-                                                            </Link>
-                                                            <p className="px-2 border-[#f8ab85] border-2 bg-[#f8ab8541] w-max rounded-xl h-max text-xs font-semibold text-black/70">
-                                                                {obj.mainTag}
-                                                            </p>
-                                                        </div>
-                                                        <p className="text-base lg:text-[1.01rem]">{obj.subTitle}</p>
-                                                    </div>
-                                                </div>
+                                                <>
+                                                    <RersourceCard obj={obj} />
+                                                </>
                                             );
                                         })
                                     ) : (
