@@ -7,14 +7,14 @@ const siteConfig = {
             "Exhaustive Resource Portal for people looking to learn new tech",
     },
     assets: {
-        icon: "vercel.repo.app/images/elastic-stack.png",
-        favicon: "vercel.repo.app/images/elastic-stack.png",
+        icon: "https://repo.vercel.app/images/elastic-stack.png",
+        favicon: "https://repo.vercel.app/images/elastic-stack.png",
     },
     socialLinks: {
         twitter: "@Yasier_noru",
-        website: "vercel.repo.in",
+        website: "https://repo.vercel.app",
         gmail: "contact.yasier@gmail.com",
-        github: "vercel.github.com/yasier-ansari",
+        github: "https://github.com/yasier-ansari",
     },
 };
 
