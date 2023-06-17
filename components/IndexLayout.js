@@ -17,9 +17,10 @@ const IndexLayout = ({ children }) => {
         <>
             {/* <div className={`min-h-screen w-full relative ${isModalVisible ? "overflow-hidden" : ""}`}> */}
             <div className="flex flex-col w-full min-h-screen bg-[#ffffff]" >
-                {/* {isModalVisible && <Modal />} */}
-                {/* <main className={`bg-[#fffcf8] ${isModalVisible ? "filter blur-sm backdrop-blur-sm" : ""}`}> */}
+                {/* {isModalVisible && <Modal type={isModalVisible} />} */}
                 <Header />
+                {/* <main className={`bg-[#fffcf8] ${isModalVisible ? "filter blur-[1px] bg-[#ffffff90] " : ""}`}> */}
+                {/* <Header /> */}
                 <main className="flex grow w-full justify-center mx-auto pt-8" >
                     {children}
                     {/* <Footer /> */}

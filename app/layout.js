@@ -4,17 +4,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import IndexLayout from "@/components/IndexLayout"
 import { configureToast } from "@/util/toast";
-import { Urbanist } from "next/font/google";
+import { DM_Sans, Manrope, Outfit, Red_Hat_Display, Urbanist, Work_Sans } from "next/font/google";
 import localFont from 'next/font/local'
 import siteConfig from "@/util/site";
 
 const cal = localFont({
-  src: "../asset/font/CalSans-SemiBold.ttf",
+  src: "../asset/font/CalSans-SemiBold.woff2",
   variable: "--font-cal",
 })
-const urbanist = Urbanist({
+
+const outfit = Outfit({
+  variable: "--font-out",
   subsets: ['latin']
 })
+
 
 export const metadata = {
   title: `${siteConfig.details.title} - ${siteConfig.details.tagLine}`,
@@ -51,17 +54,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-      <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,800;0,900;1,100;1,200;1,300;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
-      */}
-      {/* ${fontHeading.className} */}
-      <body className={`font-s min-h-screen w-full ${cal.variable} ${urbanist.className} text-gray-800 `} >
+      <body className={`font-s min-h-screen w-full ${cal.variable} ${outfit.className}  text-gray-800 `} >
         <AuthContextProvider>
           <IndexLayout >
             {children}
           </IndexLayout >
-          <ToastContainer />
+          {/* <ToastContainer /> */}
         </AuthContextProvider>
       </body>
     </html>

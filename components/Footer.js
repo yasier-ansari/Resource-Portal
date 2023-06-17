@@ -31,7 +31,7 @@ const Footer = () => {
                         </p>
                         <div className="flex flex-wrap gap-12 justify-start">
                             <FiGithub className=" bg-zinc-200 text-black rounded-full p-2 lg:px-3 h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12" />
-                            <FiYoutube className=" bg-zinc-200 text-black rounded-full p-2 lg:px-3 h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12" />
+                            {/* <FiYoutube className=" bg-zinc-200 text-black rounded-full p-2 lg:px-3 h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12" /> */}
                         </div>
                     </div>
                 </div>

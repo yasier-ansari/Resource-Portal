@@ -12,52 +12,50 @@ import { toast } from 'react-toastify';
 import { useRouter } from "next/navigation";
 
 const Header = () => {
-    const { login, session, logout } = useSession();
-    const { toggleModal, loading, userInfo } = useContext(AuthContext);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [mediaDropdownOpen, setMediaDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const mediaDropdownRef = useRef(null);
     const router = useRouter();
 
     const handleDropdownToggle = () => {
         setDropdownOpen(!dropdownOpen);
     };
-    function loginWithGitHub() {
-        return new Promise((resolve, reject) => {
-            login()
-                .then(() => {
-                    resolve();
-                })
-                .catch((error) => {
-                    reject(error);
-                });
-        });
-    }
+
+    const handleMediaDropdownToggle = () => {
+        setMediaDropdownOpen(!mediaDropdownOpen);
+    };
+
+    const handleClickOutside = (event, ref, setOpen) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+            setOpen(false);
+        }
+    };
+
     const handleLogout = () => {
         setDropdownOpen(false);
         logout();
         toast('Logged Out', { hideProgressBar: true, autoClose: 2000, type: 'success', });
         router.push('/');
+        // Perform logout logic here
     };
-
-    const handleClickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-            setDropdownOpen(false);
-        }
-    };
-    const loginHandler = () => {
-        toast.promise(loginWithGitHub, {
-            pending: 'Getting your Data',
-            success: ' Logged In 👌',
-            error: ' Login Error 🤯'
-        })
-    }
 
     useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("mousedown", (event) => handleClickOutside(event, dropdownRef, setDropdownOpen));
+        // document.addEventListener("mousedown", (event) => handleClickOutside(event, mediaDropdownRef, setMediaDropdownOpen));
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", (event) => handleClickOutside(event, dropdownRef, setDropdownOpen));
+            // document.removeEventListener("mousedown", (event) => handleClickOutside(event, mediaDropdownRef, setMediaDropdownOpen));
         };
     }, []);
+    const { login, session, logout } = useSession();
+    const { toggleModal, loading, userInfo, setIsModalVisible } = useContext(AuthContext);
+
+    const loginHandler = async () => {
+        await login()
+        toast(' Logged In 👌', { hideProgressBar: true, autoClose: 3000, type: 'success', })
+    }
+
 
     return (
         <div className="bg-[#320760] font-sat text-white ">
@@ -67,21 +65,48 @@ const Header = () => {
                     po
                 </Link>
                 <div className=" flex space-x-12 items-center justify-center text-base font-semibold">
-                    <div className="flex items-center text-md md:text-lg font-bold " >
+                    <Link href={'/about'} className="flex items-center text-md md:text-lg font-bold " >
                         <TbInfoSquareRounded className="mr-2 w-4 h-4 md:w-5 md:h-5 " />
                         About
-                    </div>
-                    <div className="flex items-center text-md md:text-lg font-bold " >
+                    </Link>
+                    <Link href={'/guide'} className="flex items-center text-md md:text-lg font-bold " >
                         <FiGitPullRequest className="mr-2 w-4 h-4 md:w-5 md:h-5 " />
                         Guide
-                    </div>
-                    <div className="flex items-center text-md md:text-lg font-bold " >
-                        <FiCommand className="mr-2 w-4 h-4 md:w-5 md:h-5 " />
-                        Search
-                    </div>
-                    <div className="flex items-center text-md md:text-lg font-bold " >
-                        <TbListDetails className="mr-2 w-4 h-4 md:w-5 md:h-5 " />
-                        Media
+                    </Link>
+                    <div className="flex items-center justify-between">
+                        <div className="relative" ref={mediaDropdownRef}>
+                            <button onClick={handleMediaDropdownToggle} className="flex items-center">
+                                <TbListDetails className="mr-2 w-4 h-4 md:w-5 md:h-5" />
+                                Media
+                            </button>
+                            {mediaDropdownOpen && (
+                                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
+                                    <ul className="p-2">
+                                        <Link href="/media?type=video" passHref>
+                                            <li className="hover:bg-gray-200 rounded-lg cursor-pointer">
+                                                <a className="block px-4 py-2 text-sm text-gray-700" onClick={() => setMediaDropdownOpen(false)}>
+                                                    Video
+                                                </a>
+                                            </li>
+                                        </Link>
+                                        <Link href="/media?type=book" passHref>
+                                            <li className="hover:bg-gray-200 rounded-lg cursor-pointer">
+                                                <a className="block px-4 py-2 text-sm text-gray-700" onClick={() => setMediaDropdownOpen(false)}>
+                                                    Book/PDF
+                                                </a>
+                                            </li>
+                                        </Link>
+                                        <Link href="/media?type=course" passHref>
+                                            <li className="hover:bg-gray-200 rounded-lg cursor-pointer">
+                                                <a className="block px-4 py-2 text-sm text-gray-700" onClick={() => setMediaDropdownOpen(false)}>
+                                                    Courses
+                                                </a>
+                                            </li>
+                                        </Link>
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="flex items-center justify-between">
@@ -108,6 +133,14 @@ const Header = () => {
                                                 Profile
                                             </p>
                                         </Link>
+                                        <li className="hover:bg-gray-200 rounded-lg cursor-pointer">
+                                            <button
+                                                className="block px-4 py-2 text-sm text-orange-500"
+                                            // onClick={handleLogout}
+                                            >
+                                                Add Resources
+                                            </button>
+                                        </li>
                                         <li className="hover:bg-gray-200 rounded-lg cursor-pointer">
                                             <button
                                                 className="block px-4 py-2 text-sm text-orange-500"

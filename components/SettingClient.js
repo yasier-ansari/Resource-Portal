@@ -204,7 +204,7 @@ const SettingClient = () => {
                                                 ...prevFormData,
                                                 infoVisible: !prevFormData.infoVisible,
                                             }))} name="infoVisible" type="checkbox" id="label2" className="form-checkbox h-4 w-4 text-blue-500" />
-                                        <label htmlFor="label2" className="font-medium text-sm text-gray-600 flex items-center" > Other people can see your profile and comments  </label>
+                                        <label htmlFor="label2" className="font-medium text-sm text-gray-600 flex items-center" > Subscribe to our monthly newsletter  </label>
                                     </div>
                                 </div>
                                 <button onClick={handleSubmit} className="flex w-full  bg-[#320760] text-white font-semibold items-center text-lg md:text-xl rounded-xl px-4 md:px-6 py-1 md:py-2 flex-col gap-2" >

@@ -1,5 +1,5 @@
 'use client'
-import { GithubAuthProvider, signInWithPopup, signOut, getAuth } from "firebase/auth";
+import { GithubAuthProvider, signInWithPopup, signOut, getAuth, signInWithRedirect } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import { createUserDocument } from "@/util/firebase/user";
 // import { AuthContext } from "./AuthContext";
@@ -15,7 +15,7 @@ export const useSession = () => {
     const login = async () => {
         setError(null);
         try {
-            const res = await signInWithPopup(auth, provider);
+            const res = await signInWithRedirect(auth, provider);
             if (!res) {
                 throw new Error("Could not complete signup");
             }

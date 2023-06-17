@@ -2,7 +2,7 @@
 
 import { createContext, useEffect, useState } from "react";
 import { useSession } from "@/hooks/useSession";
-import { onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from '@/util/firebase/config'
 import { fetchUserProfile } from "@/util/firebase/user";
 
@@ -12,8 +12,10 @@ export const AuthContextProvider = ({ children }) => {
     const [error, setError] = useState(false);
     const [authReady, setAuthReady] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState();
     const { session, setSession } = useSession();
+    const [searchTerm, setSearchTerm] = useState("");
+    const auth = getAuth();
 
     useEffect(() => {
         setAuthReady(false);
@@ -42,9 +44,13 @@ export const AuthContextProvider = ({ children }) => {
                 error,
                 setError,
                 isModalVisible,
+                setIsModalVisible,
                 toggleModal,
                 userInfo,
-                setUserInfo
+                setUserInfo,
+                setSearchTerm,
+                authReady,
+                searchTerm
             }}
         >
             {children}
