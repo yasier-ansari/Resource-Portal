@@ -5,10 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Img from '@/public/blo.jpg'
 import LogoRender from "./LogoRender";
-import { SlLocationPin } from 'react-icons/sl';
-import { TbShare } from 'react-icons/tb'
-import { RiPushpinLine, RiPushpinFill } from 'react-icons/ri'
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+import { LuHeart, LuPin, LuShare2, LuMapPin } from 'react-icons/lu'
 import CopyToClipboard from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
 
@@ -121,25 +118,34 @@ const ResourceBlog = ({ data }) => {
                 <div className="flex flex-wrap mx-auto justify-center items-center space-x-8 md:space-x-10 py-4 md:py-6">
                     <button onClick={handleLike} className="border rounded-xl p-2 bg-purple-100/50 border-stone-400 " >
                         {
-                            liked ? (<AiFillHeart className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 " />) : (<AiOutlineHeart className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 " />)
+                            liked ? (<LuHeart className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 fill-purple-500 text-violet-400 " />) : (<LuHeart className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 " />)
                         }
                     </button>
                     <button className="border rounded-xl p-2 bg-purple-100/50 border-stone-400 " >
                         <CopyToClipboard text={copyLink} onCopy={handleCopy} >
-                            <TbShare className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 " />
+                            <LuShare2 className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 " />
                         </CopyToClipboard >
                     </button>
                     <button onClick={handleBook} className="border rounded-xl p-2 bg-purple-100/50 border-stone-400 " >
                         {
-                            marked ? (<RiPushpinFill className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 fill-black " />) : (<RiPushpinLine className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 " />)
+                            marked ? (<LuPin className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 fill-purple-500 text-violet-400 " />) : (<LuPin className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 " />)
                         }
                     </button>
                 </div>
                 <div className="flex flex-col space-y-6 justify-center place-content-center px-4 sm:px-8 md:px-20 lg:px-32 mb-12 md:mb-16 lg:mb-0 mx-auto ">
-                    <div className="h-48 sm:h-56 md:h-64 lg:h-80  w-[90%] sm:w-[80%] md:w-[70%] lg:w-[55%] mx-auto rounded-[1.1rem] relative py-0 mt-0 " >
+                    {/* <div className="h-48 sm:h-56 md:h-64 lg:h-80  w-[90%] sm:w-[80%] md:w-[70%] lg:w-[55%] mx-auto rounded-[1.1rem] relative py-0 mt-0 " >
                         <Image src={Img} fill alt='non' className="rounded-[1.1rem] border-2 border-green-800/70 " sizes="(max-width: 768px) 100vw,
           (max-width: 1200px) 50vw,
           33vw" />
+                    </div> */}
+                    <div class="flex items-center mx-auto w-[90%] xs:w-[85%] sm:-[80%] md:w-[75%] lg:w-[70%] xl:w-[65%] ">
+                        <div className="relative w-full h-full aspect-video ">
+                            <Image
+                                src={Img}
+                                alt="Image description"
+                                className="rounded-[2rem] object-cover aspect-video"
+                            />
+                        </div>
                     </div>
                     <div className="flex w-[90%] md:w-[70%] lg:w-[60%] mx-auto flex-wrap gap-2 justify-center " >
                         {
@@ -152,7 +158,7 @@ const ResourceBlog = ({ data }) => {
                             })
                         }
                     </div>
-                    <p className=" px-3 sm:px-4 md:px-0 w-full md:w-[95%] lg:w-[90%] whitespace-pre-wrap pt-4 md:pt-6 prose mt-4 mb-6 font-medium text-base text-start lg:text-lg mx-auto">
+                    <p className=" px-3 prose sm:px-4 md:px-0 w-full md:w-[95%] lg:w-[90%] whitespace-pre-wrap pt-4 md:pt-6 prose mt-4 mb-6 font-medium text-base text-start lg:text-lg mx-auto">
                         {currentInfo.description}
                     </p>
                     <div className=" px-3 sm:px-4 md:px-0 text-start w-full md:w-[95%] lg:w-[90%] pt-2 md:pt-4 mx-auto font-medium text-base md:text-lg ">
@@ -166,8 +172,8 @@ const ResourceBlog = ({ data }) => {
                                                 Object.keys(currentInfo.resourceUrl).map((el, k) => {
                                                     return (
                                                         <a href={currentInfo.resourceUrl[el]} div key={k} className=" transition-all duration-300 ease-in flex group w-fit font-semibold items-center justify-start pl-2 " >
-                                                            <p className="group-hover:translate-x-2 w-max  transition-all duration-300 ease-in " >{el}
-                                                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 ease-in h-[3px] bg-gradient-to-tr to-pink-700 from-violet-600"></span>
+                                                            <p className="group-hover:translate-x-2 w-max text-purple-500 transition-all duration-300 ease-in " >{el}
+                                                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 ease-in h-[3px] bg-gradient-to-tr to-red-400 from-orange-500"></span>
                                                             </p>
                                                         </a>
                                                     )
@@ -186,7 +192,7 @@ const ResourceBlog = ({ data }) => {
                         <p className="text-gray-500 mb-2 " >Info:</p>
                         <div className="flex flex-col space-y-4 sm:space-y-6 md:space-y-0 justify-center md:flex-row md:justify-between md:items-start">
                             <div className="flex self-start   md:justify-center font-semibold  items-center space-x-2 md:space-x-3 ">
-                                <SlLocationPin className="bg-black/60 fill-white stroke-2 px-2 py-2 rounded-full h-7 w-7 md:h-8 md:w-8 lg:h-9 lg:w-9 " />
+                                <LuMapPin className="bg-black/60 fill-white stroke-2 px-2 py-2 rounded-full h-7 w-7 md:h-8 md:w-8 lg:h-9 lg:w-9 " />
                                 <p className="text-green-900" >{currentInfo.country}</p>
                             </div>
                             <div className=" justify-between flex pt-4 sm:pt-5 md:pt-0 flex-wrap gap-2">

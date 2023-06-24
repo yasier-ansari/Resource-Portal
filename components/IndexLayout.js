@@ -1,7 +1,7 @@
 'use client'
 
 import { AuthContext } from "@/hooks/AuthContext"
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Header from "./Header";
 import Footer from "./Footer";
 import Modal from "./Modal";
@@ -10,22 +10,23 @@ import { usePathname } from 'next/navigation'
 
 const IndexLayout = ({ children }) => {
     const { isModalVisible } = useContext(AuthContext);
-    const currentRoute = usePathname();
-    const isUserPage = currentRoute.startsWith('/setting/');
-    console.log(isUserPage);
+    const route = usePathname();
+    const isUserRoute = route.includes('/user/');
+    console.log("asda")
+
     return (
         <>
             {/* <div className={`min-h-screen w-full relative ${isModalVisible ? "overflow-hidden" : ""}`}> */}
-            <div className="flex flex-col w-full min-h-screen bg-[#ffffff]" >
+            <div className="flex flex-col w-full min-h-screen bg-white" >
                 {/* {isModalVisible && <Modal type={isModalVisible} />} */}
                 <Header />
                 {/* <main className={`bg-[#fffcf8] ${isModalVisible ? "filter blur-[1px] bg-[#ffffff90] " : ""}`}> */}
                 {/* <Header /> */}
-                <main className="flex grow w-full justify-center mx-auto pt-8" >
+                <main className="flex grow w-[100%]  " >
                     {children}
                     {/* <Footer /> */}
                 </main>
-                {isUserPage && <Footer />}
+                {!isUserRoute && <Footer />}
                 <ToastContainer />
             </div>
         </>

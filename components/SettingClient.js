@@ -13,11 +13,6 @@ import { fetchUserProfile } from "@/util/firebase/user";
 
 const SettingClient = () => {
     const { userInfo, setUserInfo, authReady } = useContext(AuthContext);
-    const secure = () => {
-        if (!userInfo) {
-            router.push('/')
-        }
-    }
     const { logout } = useSession();
     const [selectedImage, setSelectedImage] = useState(null);
     const [updateLoad, setUpdateLoad] = useState(null);
@@ -86,9 +81,11 @@ const SettingClient = () => {
         if (authReady) {
             if (!userInfo) {
                 router.push('/');
+            } else {
+                console.log("user wala")
             }
         }
-    }, [userInfo, router]);
+    }, [authReady]);
     return (
         <div className="flex justify-center">
             {
@@ -218,7 +215,6 @@ const SettingClient = () => {
                                 </div >
                             )
                         }
-
                     </div >
                 ) : (
                     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-75 bg-gray-500 z-50">

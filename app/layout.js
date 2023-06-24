@@ -54,7 +54,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`font-s min-h-screen w-full ${cal.variable} ${outfit.className}  text-gray-800 `} >
+      <body className={`font-s min-h-screen w-full ${cal.variable} ${outfit.className} font-sat text-gray-800 `} >
         <AuthContextProvider>
           <IndexLayout >
             {children}

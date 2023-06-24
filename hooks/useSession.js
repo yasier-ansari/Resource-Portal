@@ -10,10 +10,11 @@ export const useSession = () => {
     const [session, setSession] = useState(null);
     const provider = new GithubAuthProvider();
     const auth = getAuth();
-    const { setUserInfo, setError } = useContext(AuthContext);
+    const { setUserInfo, setError, setLoading, setAuthReady } = useContext(AuthContext);
 
     const login = async () => {
         setError(null);
+        setLoading(true)
         try {
             const res = await signInWithRedirect(auth, provider);
             if (!res) {
@@ -24,6 +25,7 @@ export const useSession = () => {
             await createUserDocument(res.user);
             const rep = await fetchUserProfile(res.user.uid);
             setUserInfo(rep);
+            setLoading(false)
         } catch (error) {
             console.log(error);
             setError(error.message);
@@ -34,6 +36,7 @@ export const useSession = () => {
             await signOut(auth);
             console.log("user logged out");
             setSession(null);
+            setUserInfo();
         } catch (error) {
             console.log(error.message);
         }

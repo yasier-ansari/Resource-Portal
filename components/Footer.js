@@ -1,44 +1,69 @@
 'use client'
 import Image from "next/image"
-import { FiGithub, FiYoutube } from "react-icons/fi"
+import { LuAtom, LuGithub } from "react-icons/lu"
+import { SiTailwindcss } from "react-icons/si"
+import { TbBrandFirebase, TbBrandReactNative } from "react-icons/tb"
 
 const Footer = () => {
     return (
-        <div className="flex flex-col items-center md:pb-6 lg:pb-4 justify-center  " >
-            <div className="flex relative pt-2 md:px-8 lg:px-12 lg:pb-4 h-full mx-auto ">
-                <div className="absolute right-6 -top-4 lg:right-40 lg:-top-6 z-10 h-20 w-20 rounded-full border-[2px] border-black bg-white ">
-                    <Image src='https://cdn.cdnlogo.com/logos/e/21/elastic-stack.svg' fill className="rounded-full rotate-[25deg] " alt="circular-logo" />
+        <div className="relative bg-gradient-to-t from-purple-100/70 ">
+            <div className="flex relative h-full max-w-[80rem] w-full justify-center mx-auto text-gray-800   ">
+                <div className="absolute right-6  -top-4 lg:right-40 lg:-top-6 z-10  rounded-full shadow-lg border-black bg-white ">
+                    <Image src='https://cdn.cdnlogo.com/logos/e/21/elastic-stack.svg' width={50} height={50} className=" rounded-full rotate-[25deg] " alt="circular-logo" />
                 </div>
-                <div className=" bg-[#320760] pb-14 pt-12 md:py-12 w-full rounded-t-xl md:rounded-xl flex flex-col space-y-12 md:space-y-0 sm:space-y-16 justify-center md:flex-row md:justify-start px-3 md:px-8 lg:px-12" >
-                    <div className="flex md:basis-[35%] lg:basis-[30%] flex-col space-y-4 md:space-y-8 lg:space-y-12 sm:space-y-6 " >
-                        <div className="flex flex-col -space-y-[0.07rem] text-xl md:text-2xl font-bold "  >
-                            <div className=" bg-stone-700 w-max text-white px-6 md:px-8 lg:px-10 py-2 md:py-3 lg:py-4 rounded-[1.3rem] border-2 " >Subscribe</div>
-                            <div className=" px-6 md:px-8 w-max bg-white border-2 border-black/90 lg:px-10 py-2 md:py-3 lg:py-4 rounded-[1.3rem] " > to our updates </div>
+                <div className=" max-w-6xl px-8 xs:px-12 sm:px-16 md:px-24 lg:px-32 py-6 md:py-8 lg:py-10 w-full flex flex-col space-y-12 md:space-y-0 sm:space-y-20 justify-between md:flex-row md:justify-between items-center " >
+                    <div className=" order-3 md:order-1 flex md:basis-[35%] mt-8 sm:mt-12 md:mt-0 px-3 md:px-0  flex-col space-y-4 sm:space-y-6 text-start " >
+                        <div className=" flex items-center space-x-3 md:space-x-4 font-medium text-lg sm:text-xl md:text-2xl" >
+                            <Image src={'https://cdn.cdnlogo.com/logos/e/21/elastic-stack.svg'} width={30} height={30} alt="icon" />
+                            <p className="font-semibold" >
+                                <span className="text-orange-400" >Re;</span>po  </p>
                         </div>
-                        <div className=" w-full md:w-max" >
-                            <div className="flex justify-between shadow-black/40 bg-white font-semibold border rounded-2xl  duration-75 transition-all overflow-hidden ease-in-out drop-shadow-2xl shadow-md ">
-                                <label className=" flex rounded-lg  relative" >
-                                    <input placeholder=" jhon@doe.mail" className="w-full placeholder:font-semibold placeholder:text-gray-500 placeholder:pl-0 bg-white  py-1 md:py-2 outline-none px-6 " />
-                                </label>
-                                <button className="bg-orange-500 text-white rounded-xl py-2 px-3 md:px-4 m-1" >send</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex md:basis-[65%] px-3 md:px-0 lg:basis-[70%] md:pl-4 lg:pl-16 text-white flex-col space-y-4 sm:space-y-6 text-start " >
-                        <p className="font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl " >Re;po</p>
-                        <p className="text-base md:text-lg font-semibold text-white " >
-                            Ultimate resource portal for tech students, providing access to an array of valuable resources that are difficult to find elsewhere.  From DSA to Game Dev , Re;po is a magical and indispensable resource for anyone seeking to expand their tech expertise
+                        <p className=" text-sm sm:text-base md:text-lg font-light " >
+                            The ultimate tech resource portal! Discover a treasure trove of valuable resources, from DSA to Game Dev. Expand your tech expertise with us!
                         </p>
-                        <div className="flex flex-wrap gap-12 justify-start">
-                            <FiGithub className=" bg-zinc-200 text-black rounded-full p-2 lg:px-3 h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12" />
+                        <div className="flex flex-wrap items-center font-medium text-violet-400 ">
+                            Made with
+                            <p className="relative group items-center " ><TbBrandReactNative className=" mx-[3px] h-3 w-3 md:h-4 md:w-4" />
+                                <a href="www.tailwindcss.com" target="_blank" rel="noreferrer"
+                                    className="group-hover:flex absolute -top-12 hidden bg-gradient-to-tr from-purple-100 rounded-lg text-gray-600 border-[5px] border-violet-100 shadow-xl to-violet-200 px-3 py-2" > Nextjs</a>
+                            </p>
+                            <p className="relative group items-center" >
+                                <SiTailwindcss className=" mx-[3px] h-3 w-3 md:h-4 md:w-4" />
+                                <a href="www.nextjs.org" target="_blank" rel="noreferrer" className="group-hover:flex absolute -left-[100%] -top-12 hidden bg-gradient-to-tr from-purple-100 rounded-lg text-gray-600 border-[5px] border-violet-100 shadow-xl to-violet-200 px-3 py-2" > Tailwindcss</a>
+                            </p>
+                            <p className="relative group items-center" >
+                                <TbBrandFirebase className=" mx-[3px] h-3 w-3 md:h-4 md:w-4" />
+                                <a href="firebase.google.com" target="_blank" rel="noreferrer" className="group-hover:flex absolute -top-12 hidden bg-gradient-to-tr from-purple-100 rounded-lg text-gray-600 border-[5px] border-violet-100 shadow-xl to-violet-200 px-3 py-2" > Firebase</a>
+                            </p>
+                            by ‎ <a href="https://yasier.in" target="_blank" rel="noreferrer" className=" bg-gradient-to-bl from-rose-300 via-orange-500 to-red-300/60 bg-clip-text text-transparent shadow-white" >@yasier</a>
                             {/* <FiYoutube className=" bg-zinc-200 text-black rounded-full p-2 lg:px-3 h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12" /> */}
                         </div>
                     </div>
+                    <div className="w-[70%] order-2 text-center md:w-[2px] h-[1px] md:h-[80%] bg-stone-300/70 " ></div>
+                    <div className="order-1 md:order-3 flex justify-between w-[70%]  md:basis-[45%] items-center " >
+                        <div className="flex text-gray-700 items-center flex-col gap-2 text-xs md:text-base "  >
+                            <p className="text-gray-400 select-none font-medium" >Media</p>
+                            <p>Video</p>
+                            <p>Course</p>
+                            <p>Book</p>
+                        </div>
+                        <div className="flex text-gray-700 items-center flex-col gap-2 text-xs md:text-base "  >
+                            <p className="text-gray-400 select-none font-medium" >Company</p>
+                            <p>About</p>
+                            <p>Guide</p>
+                            <p>Term</p>
+                        </div>
+                        <div className="flex text-gray-700 items-center flex-col gap-2 text-xs md:text-base "  >
+                            <p className="text-gray-400 select-none font-medium" >Socials</p>
+                            <p>Github</p>
+                            <p>Twitter</p>
+                            <p>Figma</p>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-            <a href="https://www.github.com/yasier-ansari/re-po" target="blank" rel="noreferrer" className=" absolute bottom-2 md:bottom-8 lg:bottom-0 lg:text-black text-white opacity-75 lg:relative  font-semibold lg:opacity-[65%] hover:opacity-[90%] items-center mx-auto   " >Made with 💖  by yasier </a>
         </div>
+
     )
 }
 

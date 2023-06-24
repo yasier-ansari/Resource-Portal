@@ -1,38 +1,35 @@
 'use client'
 
 import CardLoading from "@/components/CardLoading";
-import { Suspense, useEffect, useState } from "react"
+import { Suspense, useContext, useEffect, useState } from "react"
 import { collection, getDocs } from "firebase/firestore"
-import { FiSearch } from 'react-icons/fi'
+import { LuSearch } from 'react-icons/lu'
 import { HiNoSymbol } from 'react-icons/hi2';
-import Link from "next/link";
-import Image from "next/image";
 import { db } from '@/util/firebase/config'
-import Img from '@/public/blo.jpg'
 import Footer from "./Footer";
 import RersourceCard from "./RersourceCard";
+import { AuthContext } from "@/hooks/AuthContext";
+import Compare from "./Compare";
 
 
 const IndexPage = () => {
     const [data, setData] = useState([]);
     const [filterData, setFilterData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
-    const [filterTag, setFilterTag] = useState("");
-    const [filterLang, setFilterLang] = useState("English");
+    const { setFilterLang, filterLang, filterTag, setFilterTag } = useContext(AuthContext)
     const [searching, setSearching] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const mTags = [
-        'Web Dev', 'Mobile Dev', 'DevOps', 'DS-ML', 'Game Dev', 'Course Platform', 'DSA', 'Coding', 'Informative'
-    ];
-    const lang = ['English', 'Hindi', 'Japanese', 'Arabic'];
+        'Web', 'Mobile', 'DevOps', 'DS/ML', 'Game', 'Cloud', 'DSA', 'Cybersecurity', 'Design', 'Web3', 'AR-VR', 'System', 'Misc'
+    ]
+    const lang = ['English', 'Hindi'];
     const docRef = collection(db, "AltData");
 
 
     useEffect(() => {
         setLoading(true);
         const CACHE_KEY = "AltData";
-        const MAX_CACHE_AGE = 60 * 60 * 1000; // 1 hour in milliseconds
-
+        const MAX_CACHE_AGE = 60 * 60 * 1000;
         const getCache = () => {
             const cachedData = localStorage.getItem(CACHE_KEY);
             if (!cachedData) {
@@ -72,7 +69,6 @@ const IndexPage = () => {
                 console.error(error);
             }
         };
-
         getDocument();
         setLoading(false);
     }, []);
@@ -131,155 +127,98 @@ const IndexPage = () => {
             setSearching(false);
         }, 1000);
     };
-    // const sendEmail = async () => {
-    //     try {
-    //         await fetch('http://localhost:3000/email', {
-    //             method: 'POST',
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({ userEmail: 'contactnabeelmirza@gmail.com', userName: "nabeel" }),
-    //         })
-    //         console.log("done")
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
     return (
         <>
-            <>
-                <div className="min-h-[70vh]" >
-                    <div className="px-4 sm:px-10 md:px-20 lg:px-32 mb-12 md:mb-16 lg:mb-0 mt-12 mx-auto text-center flex align-vertical content-start items-center justiy-center flex-col space-y-8 " >
-                        <div className=" text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[84px] 2xl:text-8xl font-bold font-cal max-w-5xl xl:max-w-6xl " >
-                            Find the <span className=" font-black bg-gradient-to-tr from-purple-500 to-sky-700 via-violet-800 bg-clip-text text-transparent " >right</span> resources
-                            to elevate your <span className="font-black bg-gradient-to-br bg-clip-text text-transparent to-rose-500 from-orange-500  " >skills</span>
-                        </div>
-                        <div className="pt-4 font-[200] text-base md:text-lg lg:text-xl max-w-3xl " >
-                            {/* Want to learn new tech ? but dont know where to start ? surf through our curated list to get started */}
-                            {/* Embark on your tech learning journey with confidence and efficiency using ExploreTech. Say goodbye to endless searching and welcome a curated collection of the best resources, empowering you to learn, grow, and stay ahead in the rapidly evolving tech world. Start your exploration today and unlock a world of technical knowledge at your fingertips. */}
-                            Begin your tech learning journey with confidence and efficiency. Re-po provides curated resources to empower your growth and keep you ahead in the tech world.
-                        </div>
-                        <div className="flex space-x-6 w-max items-center  font-medium ">
-                            <div className="bg-rose-100 flex rounded-lg items-center relative" >
-                                <FiSearch className="h-4 w-4 md:h-5 md:w-5 absolute left-2 top-[10px] stroke-[1.5px] z-10 " />
-                                <input className="w-full bg-white border-t-[1.3px] border-l-[1.3px] border-r-[1.3px] border-b-[1.3px] focus:border-r-[2.5px] focus:border-b-[2.5px]  border-purple-800 duration-75 transition-all ease-in-out drop-shadow-lg shadow-sm py-1 md:py-2 outline-none pl-10 rounded-lg " value={searchQuery} onChange={(e) => searchHandler(e.target.value)} />
-                            </div>
-                            {/* <button className=" bg-black bg-gradient-to-tr bg-clip-text text-transparent from-purple-600 via-blue-800 to-sky-700 text-white rounded-lg py-2 px-3 md:px-4" >search</button> */}
-                            <button className="   bg-gradient-to-tr from-purple-600 to-blue-700 text-white rounded-lg py-2 px-3 md:px-4" >search</button>
-
-                        </div>
-                        <div className="flex w-full pt-6 max-w-5xl mx-auto flex-wrap gap-2 justify-center">
-                            {
-                                mTags.map((el, k) => (
-                                    <button onClick={() => filterSearchBymTag(el)} key={k} className={` text-sm px-2 py-1 sm:px-4 md:px-5 font-semibold  border-2  rounded-xl ${filterTag === el ? ' bg-orange-400 text-white ring-2 ring-orange-400  ' : 'text-black bg-[#f8ab851f] border-[#f8ab85] '} `} >
-                                        {el}
-                                    </button>
-                                ))
-                            }
-                        </div>
-                        <div className="flex justify-center items-center mx-auto space-x-8 md:space-x-10 pb-6 ">
-                            <select onChange={(e) => filterByLang(e.target.value)} value={filterLang} className=" text-black bg-white/80 rounded-md h-full w-full px-1 md:px-2 lg:px-3 py-1 md:py-2 outline-transparent border-[1.5px] shadow-lg focus:shadow-xl " >
-                                {
-                                    lang.map((langs, key) => {
-                                        return (<option value={langs} key={key} >{langs}</option>)
-                                    }
-                                    )
-                                }
-                            </select>
-                            <button onClick={reset} className="flex space-x-2 bg-purple-700 px-2 py-1 md:px-3 rounded-lg text-white items-center justify-center">
-                                <p>Reset</p> <HiNoSymbol className="text-white fill-white stroke-[1.1px] stroke-white" />
+            <div className="min-h-[70vh] bg-[#ffffff]   " >
+                <div className=" bg-gradient-radial from-purple-100/60 to-[#ffffff]  pt-12 md:pt-16 lg:pt-20 xl:pt-28 w-full  mx-auto text-center flex align-vertical content-start items-center justiy-center flex-col space-y-8 " >
+                    <div className="  text-center -tracking-[0.07rem] w-full text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[84px] 2xl:text-8xl font-bold max-w-5xl xl:max-w-6xl " >
+                        Find the <span className=" font-bold bg-gradient-to-t from-purple-400  via-violet-600 to-violet-400 bg-clip-text text-transparent " >right</span> resources
+                        to elevate your <span className="font-bold bg-gradient-to-b bg-clip-text text-transparent from-orange-300 to-red-400 via-rose-500  " >skill</span>
+                    </div>
+                    <div className="  pt-4 font-normal text-[0.9rem] xs:text-base md:text-lg lg:text-xl max-w-3xl " >
+                        {/* Want to learn new tech ? but dont know where to start ? surf through our curated list to get started */}
+                        {/* Embark on your tech learning journey with confidence and efficiency using ExploreTech. Say goodbye to endless searching and welcome a curated collection of the best resources, empowering you to learn, grow, and stay ahead in the rapidly evolving tech world. Start your exploration today and unlock a world of technical knowledge at your fingertips. */}
+                        Begin your tech learning journey with confidence and efficiency. Re-po provides curated resources to empower your growth and keep you ahead in the tech world.
+                    </div>
+                    <div>
+                        <div className="flex items-center justify-center px-6 md:px-8 lg:px-10 " >
+                            <button className=" bg-gradient-to-r from-stone-600 to-black/80 px-3 md:px-5 xl:px-6 py-2 md:py-3 text-white font-medium text-base sm:text-lg md:text-xl rounded-2xl border  " >
+                                Start Learning
                             </button>
                         </div>
                     </div>
-                    {/* <div className="flex relative py-12 ">
+                    <Compare />
+                    <div className=" flex flex-col space-y-5 xs:flex-row xs:space-x-6 xs:space-y-0 w-max items-center font-medium ">
+                        <div className="bg-rose-100 flex rounded-lg items-center relative" >
+                            <LuSearch className="h-4 w-4 md:h-5 md:w-5 absolute left-2 top-[10px] stroke-[1.5px] z-10 " />
+                            <input className="w-full bg-white border-t-[1.3px] border-l-[1.3px] border-r-[1.3px] border-b-[1.3px] focus:border-r-[2.5px] focus:border-b-[2.5px]  border-purple-800 duration-75 transition-all ease-in-out drop-shadow-lg shadow-sm py-1 md:py-2 outline-none pl-10 rounded-lg " value={searchQuery} onChange={(e) => searchHandler(e.target.value)} />
+                        </div>
+                        <button className="   bg-gradient-to-tr from-purple-600 to-blue-700 text-white rounded-lg py-2 px-3 md:px-4" >search</button>
+                    </div>
+                    <div className=" px-6 xs:px-8 sm:px-0 flex pt-6 max-w-5xl mx-auto flex-wrap gap-2 justify-center">
                         {
-                            loading ? (
-                                <div className="fixed inset-0 left-0 top-0  w-full h-full flex justify-center items-center bg-opacity-75 filter backdrop-blur-sm z-50">
-                                    <div className="flex items-center space-x-3 bg-white px-3 py-2 rounded-lg">
-                                        <h2 className="text-lg font-semibold">Loading</h2>
-                                        <div className="animate-spin rounded-full h-4 w-4 border-[2.2px] border-r-none border-r-white border-violet-500"></div>
-                                    </div>
-                                </div >
-                            ) :
-                                (<div className="transition-all ease-linear pb-12 px-4 sm:px-5 lg:px-0 container mx-auto grid grid-cols md:grid-cols-2 lg:grid-cols-3 items-center place-content-center gap-6 relative justify-center justify-items-center align-items-center"
-                                >
-                                    !searching ? (
-                                    filterData?.length !== 0 ? (
-                                        filterData?.map((obj) => {
-                                            return (
-                                    <div key={obj.id} className=" flex flex-col group hover:border-green-500 hover:border-2 hover:scale-105 transition-all ease-linear bg-white rounded-2xl border-2 space-y-4 border-black/5 shadow-md w-[20rem] xl:w-[22rem] h-72 md:h-[20rem] lg:h-[22rem]   ">
-                                        <Link href={`/resource/${encodeURIComponent(obj.title)}`} className=" h-[60%] overflow-hidden p-2 md:p-3 lg:p-4 pb-0 md:pb-0 lg:pb-0 " >
-                                            <div className="h-full overflow-hidden group-hover:drop-shadow-sm shadow-black drop-shadow-md w-full rounded-[1.1rem] relative  " >
-                                                <Image src={Img} fill alt='non' className="group-hover:shadow-md shadow-black drop-shadow-md group-hover:scale-105 transition-all ease-in " sizes="(max-width: 768px) 100vw,
-          (max-width: 1200px) 50vw,
-          33vw" />
-                                            </div>
-                                        </Link>
-                                        <div className=" h-[40%] flex justify-start text-start flex-col  px-3 md:px-4 lg:px-5 " >
-                                            <div className="flex justify-between font-bold text-lg md:text-xl" >
-                                                <Link href={`/resource/${obj.title}`}>{obj.title} <sup className="font-medium text-xs " >{obj.language.slice(0, 2).toLowerCase()}</sup> </Link>
-                                                <p className="px-2 border-[#f8ab85] border-2 bg-[#f8ab8541] w-max rounded-xl h-max text-xs font-semibold text-black/70 " >
-                                                    {obj.mainTag}
-                                                </p>
-                                            </div>
-                                            <p className="text-base lg:text-[1.01rem]" >{obj.subTitle}</p>
-                                        </div>
-                                    </div>
-}
-                                    )
-                                        })
-                                    ) : (
-                                    <div className="flex h-[50vh] col-span-1 md:col-span-2 lg:col-span-3 mx-auto max-w-5xl " >
+                            mTags.map((el, k) => (
+                                <button onClick={() => filterSearchBymTag(el)} key={k} className={` text-sm px-2 py-1 sm:px-4 md:px-5 font-semibold  border-2  rounded-xl ${filterTag === el ? ' bg-orange-400 text-white ring-2 ring-orange-400  ' : 'text-black bg-[#f8ab851f] border-[#f8ab85] '} `} >
+                                    {el}
+                                </button>
+                            ))
+                        }
+                    </div>
+                    <div className="flex justify-center items-center mx-auto space-x-8 md:space-x-10 pb-6 ">
+                        <select onChange={(e) => filterByLang(e.target.value)} value={filterLang} className=" text-black bg-white/80 rounded-md h-full w-full px-1 md:px-2 lg:px-3 py-1 md:py-2 outline-transparent border-[1.5px] shadow-lg focus:shadow-xl " >
+                            {
+                                lang.map((langs, key) => {
+                                    return (<option value={langs} key={key} >{langs}</option>)
+                                }
+                                )
+                            }
+                        </select>
+                        <button onClick={reset} className="flex space-x-2 bg-purple-700 px-2 py-1 md:px-3 rounded-lg text-white items-center justify-center">
+                            <p>Reset</p> <HiNoSymbol className="text-white fill-white stroke-[1.1px] stroke-white" />
+                        </button>
+                    </div>
+                </div>
+                <div className=" flex relative py-12">
+                    {loading ? (
+                        <div className="flex items-center justify-center col-span-1 md:col-span-2 mx-auto gap-4 md:gap-8 lg:gap-12 " >
+                            <div className=" hidden lg:flex gap-8 ">
+                                <CardLoading key={1} />
+                                <CardLoading key={2} />
+                                <CardLoading key={3} />
+                            </div>
+                            <div className=" hidden md:flex lg:hidden gap-6 ">
+                                <CardLoading key={1} />
+                                <CardLoading key={2} />
+                            </div>
+                            <div className="flex md:hidden  gap-6 ">
+                                <CardLoading key={1} />
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="transition-all max-w-5xl ease-linear pb-12 container mx-auto grid grid-cols sm:grid-cols-2 lg:grid-cols-3 items-center place-content-center gap-10 relative justify-center justify-items-center align-items-center">
+                            {!searching ? (
+                                filterData?.length !== 0 ? (
+                                    filterData?.map((obj, index) => {
+                                        return (
+                                            <RersourceCard key={index} obj={obj} />
+                                        );
+                                    })
+                                ) : (
+                                    <div className="flex h-[50vh] col-span-1 md:col-span-2 lg:col-span-3 mx-auto max-w-5xl items-center justify-center ">
                                         Info Not Found
                                     </div>
-                                    )
-                                    ) : (
-                                    <>
-                                        <CardLoading key={1} />
-                                        <CardLoading key={2} />
-                                        <CardLoading key={3} />
-                                    </>
-                                    )
-                                </div>
                                 )
-                        }
-                    </div> */}
-                    <div className="flex relative py-12">
-                        {loading ? (
-                            <div className="fixed inset-0 left-0 top-0 w-full h-full flex justify-center items-center bg-opacity-75 filter backdrop-blur-sm z-50">
-                                <div className="flex items-center space-x-3 bg-white px-3 py-2 rounded-lg">
-                                    <h2 className="text-lg font-semibold">Loading</h2>
-                                    <div className="animate-spin rounded-full h-4 w-4 border-[2.2px] border-r-none border-r-white border-violet-500"></div>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="transition-all ease-linear pb-12 px-4 sm:px-5 lg:px-0 container mx-auto grid grid-cols md:grid-cols-2 lg:grid-cols-3 items-center place-content-center gap-6 relative justify-center justify-items-center align-items-center">
-                                {!searching ? (
-                                    filterData?.length !== 0 ? (
-                                        filterData?.map((obj, index) => {
-                                            return (
-                                                <RersourceCard key={index} obj={obj} />
-                                            );
-                                        })
-                                    ) : (
-                                        <div className="flex h-[50vh] col-span-1 md:col-span-2 lg:col-span-3 mx-auto max-w-5xl">
-                                            Info Not Found
-                                        </div>
-                                    )
-                                ) : (
-                                    <>
-                                        <CardLoading key={1} />
-                                        <CardLoading key={2} />
-                                        <CardLoading key={3} />
-                                    </>
-                                )}
-                            </div>
-                        )}
-                    </div>
-
+                            ) : (
+                                <>
+                                    <CardLoading key={1} />
+                                    <CardLoading key={2} />
+                                    <CardLoading key={3} />
+                                </>
+                            )}
+                        </div>
+                    )}
                 </div>
-            </>
-            <Footer />
+            </div>
         </>
     )
 }

@@ -10,26 +10,27 @@ export const AuthContext = createContext({});
 
 export const AuthContextProvider = ({ children }) => {
     const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true)
     const [authReady, setAuthReady] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState();
     const { session, setSession } = useSession();
     const [searchTerm, setSearchTerm] = useState("");
-    const auth = getAuth();
+    const [filterTag, setFilterTag] = useState("");
+    const [filterLang, setFilterLang] = useState("English");
 
     useEffect(() => {
         setAuthReady(false);
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const res = await fetchUserProfile(user.uid);
-                setAuthReady(true);
                 setUserInfo(res);
-                // setUserInfo(res);
                 setSession(user);
             } else {
                 setUserInfo(null);
                 setSession(null);
             }
+            setAuthReady(true);
         });
         return unsubscribe;
     }, []);
@@ -50,7 +51,14 @@ export const AuthContextProvider = ({ children }) => {
                 setUserInfo,
                 setSearchTerm,
                 authReady,
-                searchTerm
+                setAuthReady,
+                searchTerm,
+                filterTag,
+                filterLang,
+                setFilterLang,
+                setFilterTag,
+                loading,
+                setLoading
             }}
         >
             {children}
