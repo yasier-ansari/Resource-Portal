@@ -4,6 +4,7 @@ const VideoPage = () => {
     return (
         <>
             <div className="min-h-[70vh] bg-[#ffffff]   " >
+                hello world
             </div>
         </>
     )

@@ -3,7 +3,7 @@ import SettingClient from "@/components/SettingClient"
 
 const Page = () => {
     return (
-        <div>
+        <div className=" text-center w-full bg-white" >
             <SettingClient />
         </div>
     )

@@ -1,9 +1,9 @@
-import AddResource from "@/components/AddResource"
+import ChangePassword from "@/components/ChangePassword"
 
 const Page = () => {
     return (
         <div>
-            <AddResource />
+            <ChangePassword />
         </div>
     )
 }

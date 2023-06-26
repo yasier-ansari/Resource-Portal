@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation'
 const IndexLayout = ({ children }) => {
     const { isModalVisible } = useContext(AuthContext);
     const route = usePathname();
-    const isUserRoute = route.includes('/user/');
+    const isUserRoute = route.includes('/user/') || route.includes('/register') || route.includes('/login');
     console.log("asda")
 
     return (

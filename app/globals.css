@@ -25,3 +25,13 @@ body {
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
+
+.curve {
+  position: absolute;
+  background-image: url('../public/images/curve.png');
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+
+

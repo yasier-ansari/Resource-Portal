@@ -18,11 +18,14 @@ export const AuthContextProvider = ({ children }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [filterTag, setFilterTag] = useState("");
     const [filterLang, setFilterLang] = useState("English");
+    const [typeOfAuth, setTypeOfAuth] = useState();
 
     useEffect(() => {
         setAuthReady(false);
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
+                console.log(user, "user here")
+                setTypeOfAuth(user.providerData[0].providerId)
                 const res = await fetchUserProfile(user.uid);
                 setUserInfo(res);
                 setSession(user);
@@ -58,7 +61,8 @@ export const AuthContextProvider = ({ children }) => {
                 setFilterLang,
                 setFilterTag,
                 loading,
-                setLoading
+                setLoading,
+                typeOfAuth
             }}
         >
             {children}

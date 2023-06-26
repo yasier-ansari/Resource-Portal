@@ -3,14 +3,15 @@
 import CardLoading from "@/components/CardLoading";
 import { Suspense, useContext, useEffect, useState } from "react"
 import { collection, getDocs } from "firebase/firestore"
-import { LuSearch } from 'react-icons/lu'
+import { LuInfo, LuSearch } from 'react-icons/lu'
 import { HiNoSymbol } from 'react-icons/hi2';
 import { db } from '@/util/firebase/config'
 import Footer from "./Footer";
 import RersourceCard from "./RersourceCard";
 import { AuthContext } from "@/hooks/AuthContext";
 import Compare from "./Compare";
-
+import Image from "next/image";
+import Imeg from '@/public/images/curve.png'
 
 const IndexPage = () => {
     const [data, setData] = useState([]);
@@ -19,6 +20,7 @@ const IndexPage = () => {
     const { setFilterLang, filterLang, filterTag, setFilterTag } = useContext(AuthContext)
     const [searching, setSearching] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isInputFocused, setIsInputFocused] = useState(false);
     const mTags = [
         'Web', 'Mobile', 'DevOps', 'DS/ML', 'Game', 'Cloud', 'DSA', 'Cybersecurity', 'Design', 'Web3', 'AR-VR', 'System', 'Misc'
     ]
@@ -148,76 +150,107 @@ const IndexPage = () => {
                         </div>
                     </div>
                     <Compare />
-                    <div className=" flex flex-col space-y-5 xs:flex-row xs:space-x-6 xs:space-y-0 w-max items-center font-medium ">
-                        <div className="bg-rose-100 flex rounded-lg items-center relative" >
-                            <LuSearch className="h-4 w-4 md:h-5 md:w-5 absolute left-2 top-[10px] stroke-[1.5px] z-10 " />
-                            <input className="w-full bg-white border-t-[1.3px] border-l-[1.3px] border-r-[1.3px] border-b-[1.3px] focus:border-r-[2.5px] focus:border-b-[2.5px]  border-purple-800 duration-75 transition-all ease-in-out drop-shadow-lg shadow-sm py-1 md:py-2 outline-none pl-10 rounded-lg " value={searchQuery} onChange={(e) => searchHandler(e.target.value)} />
-                        </div>
-                        <button className="   bg-gradient-to-tr from-purple-600 to-blue-700 text-white rounded-lg py-2 px-3 md:px-4" >search</button>
-                    </div>
-                    <div className=" px-6 xs:px-8 sm:px-0 flex pt-6 max-w-5xl mx-auto flex-wrap gap-2 justify-center">
-                        {
-                            mTags.map((el, k) => (
-                                <button onClick={() => filterSearchBymTag(el)} key={k} className={` text-sm px-2 py-1 sm:px-4 md:px-5 font-semibold  border-2  rounded-xl ${filterTag === el ? ' bg-orange-400 text-white ring-2 ring-orange-400  ' : 'text-black bg-[#f8ab851f] border-[#f8ab85] '} `} >
-                                    {el}
-                                </button>
-                            ))
-                        }
-                    </div>
-                    <div className="flex justify-center items-center mx-auto space-x-8 md:space-x-10 pb-6 ">
-                        <select onChange={(e) => filterByLang(e.target.value)} value={filterLang} className=" text-black bg-white/80 rounded-md h-full w-full px-1 md:px-2 lg:px-3 py-1 md:py-2 outline-transparent border-[1.5px] shadow-lg focus:shadow-xl " >
-                            {
-                                lang.map((langs, key) => {
-                                    return (<option value={langs} key={key} >{langs}</option>)
-                                }
-                                )
-                            }
-                        </select>
-                        <button onClick={reset} className="flex space-x-2 bg-purple-700 px-2 py-1 md:px-3 rounded-lg text-white items-center justify-center">
-                            <p>Reset</p> <HiNoSymbol className="text-white fill-white stroke-[1.1px] stroke-white" />
-                        </button>
-                    </div>
                 </div>
-                <div className=" flex relative py-12">
-                    {loading ? (
-                        <div className="flex items-center justify-center col-span-1 md:col-span-2 mx-auto gap-4 md:gap-8 lg:gap-12 " >
-                            <div className=" hidden lg:flex gap-8 ">
-                                <CardLoading key={1} />
-                                <CardLoading key={2} />
-                                <CardLoading key={3} />
-                            </div>
-                            <div className=" hidden md:flex lg:hidden gap-6 ">
-                                <CardLoading key={1} />
-                                <CardLoading key={2} />
-                            </div>
-                            <div className="flex md:hidden  gap-6 ">
-                                <CardLoading key={1} />
-                            </div>
+                <div class="flex flex-col h-full w-full bg-[#100220] relative p-6 xs:p-10 mt-20 xs:mt-28 sm:mt-12 sm:p-16 md:px-20 lg:px-32 items-center justify-center  ">
+                    <div className="absolute -top-[79px] sm:-top-[111px] md:-top-[127px] lg:-top-[143px] right-0 z-10 w-20 h-20 sm:h-28 sm:w-28 md:w-32 md:h-32 lg:h-36 lg:w-36 " >
+                        <div class="flex h-full w-full relative ">
+                            <Image src={Imeg} fill className=" -scale-x-100  " alt="side1" />
                         </div>
-                    ) : (
-                        <div className="transition-all max-w-5xl ease-linear pb-12 container mx-auto grid grid-cols sm:grid-cols-2 lg:grid-cols-3 items-center place-content-center gap-10 relative justify-center justify-items-center align-items-center">
-                            {!searching ? (
-                                filterData?.length !== 0 ? (
-                                    filterData?.map((obj, index) => {
-                                        return (
-                                            <RersourceCard key={index} obj={obj} />
-                                        );
-                                    })
-                                ) : (
-                                    <div className="flex h-[50vh] col-span-1 md:col-span-2 lg:col-span-3 mx-auto max-w-5xl items-center justify-center ">
-                                        Info Not Found
-                                    </div>
-                                )
-                            ) : (
-                                <>
+                    </div>
+                    <div className="absolute -top-[79px] sm:-top-[111px] md:-top-[127px] lg:-top-[143px] left-0 z-10 w-20 h-20 sm:h-28 sm:w-28 md:w-32 md:h-32 lg:h-36 lg:w-36 " >
+                        <div class="flex h-full w-full relative ">
+                            <Image src={Imeg} fill className="  " alt="side1" />
+                        </div>
+                    </div>
+                    <div className="absolute -bottom-[79px] sm:-bottom-[111px] md:-bottom-[127px] lg:-bottom-[142px] right-0 z-10 w-20 h-20 sm:h-28 sm:w-28 md:w-32 md:h-32 lg:h-36 lg:w-36 " >
+                        <div class="flex h-full w-full relative ">
+                            <Image src={Imeg} fill className=" -rotate-180 " alt="side1" />
+                        </div>
+                    </div>
+                    <div className="absolute -bottom-[79px] sm:-bottom-[111px] md:-bottom-[127px] lg:-bottom-[142px] left-0 z-10 w-20 h-20 sm:h-28 sm:w-28 md:w-32 md:h-32 lg:h-36 lg:w-36 " >
+                        <div class="flex h-full w-full relative ">
+                            <Image src={Imeg} fill className=" -scale-y-100 " alt="side1" />
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-8 items-center justify-center  mb-6 ">
+                        <div className="bg-rose-100 flex rounded-xl items-center relative tems-center shadow-sm foc focus-within:shadow-lg focus-within:shadow-white/20 shadow-white/30 font-medium w-full max-w-md " >
+                            <LuSearch className="h-4 w-4 md:h-5 md:w-5 absolute left-2 top-[10px] stroke-[1.5px] z-10 " />
+                            <input className="w-full bg-white border border-purple-800 duration-75 transition-all ease-in-out drop-shadow-lg shadow-sm py-1 md:py-2 outline-none pl-10 rounded-lg  " value={searchQuery} onChange={(e) => searchHandler(e.target.value)} onFocus={() => setIsInputFocused(true)}
+                                onBlur={() => setIsInputFocused(false)} />
+                        </div>
+                        {
+                            !isInputFocused && <div className=" px-6 xs:px-8 sm:px-0 flex pt-6 max-w-4xl mx-auto flex-wrap gap-2 justify-center">
+                                {
+                                    mTags.map((el, k) => (
+                                        <button onClick={() => filterSearchBymTag(el)} key={k} className={` text-sm px-2 py-1 sm:px-4 md:px-5 font-semibold  rounded-xl ${filterTag === el ? ' bg-orange-400 text-white   ' : 'text-black bg-orange-50 border-orange-400 '} `} >
+                                            {el}
+                                        </button>
+                                    ))
+                                }
+                            </div>
+                        }
+                        {
+                            !isInputFocused ? <div className="flex justify-center items-center mx-auto space-x-8 md:space-x-10 ">
+                                <select onChange={(e) => filterByLang(e.target.value)} value={filterLang} className=" text-black bg-white/80 rounded-md h-full w-full px-1 md:px-2 lg:px-3 py-1 md:py-2 outline-transparent border-[1.5px] shadow-lg focus:shadow-xl " >
+                                    {
+                                        lang.map((langs, key) => {
+                                            return (<option value={langs} key={key} >{langs}</option>)
+                                        }
+                                        )
+                                    }
+                                </select>
+                                <button onClick={reset} className="flex space-x-2 bg-purple-700 px-2 py-1 md:px-3 rounded-lg text-white items-center justify-center">
+                                    <p>Reset</p> <HiNoSymbol className="text-white fill-white stroke-[1.1px] stroke-white" />
+                                </button>
+                            </div> : <div class="flex space-x2 md:space-x-3 justify-center items-center mx-auto text-white">
+                                <LuInfo />
+                                <span>Focus out of search box to use filters</span>
+                            </div>
+                        }
+
+                    </div>
+                    <div className=" flex relative py-12">
+                        {loading ? (
+                            <div className="flex items-center justify-center col-span-1 md:col-span-2 mx-auto gap-4 md:gap-8 lg:gap-12 " >
+                                <div className=" hidden lg:flex gap-8 ">
                                     <CardLoading key={1} />
                                     <CardLoading key={2} />
                                     <CardLoading key={3} />
-                                </>
-                            )}
-                        </div>
-                    )}
+                                </div>
+                                <div className=" hidden md:flex lg:hidden gap-6 ">
+                                    <CardLoading key={4} />
+                                    <CardLoading key={5} />
+                                </div>
+                                <div className="flex md:hidden  gap-6 ">
+                                    <CardLoading key={6} />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="transition-all max-w-5xl ease-linear pb-12 container mx-auto grid grid-cols sm:grid-cols-2 lg:grid-cols-3 items-center place-content-center gap-10 relative justify-center justify-items-center align-items-center">
+                                {!searching ? (
+                                    filterData?.length !== 0 ? (
+                                        filterData?.map((obj, index) => {
+                                            return (
+                                                <RersourceCard key={index} obj={obj} />
+                                            );
+                                        })
+                                    ) : (
+                                        <div className="flex h-[50vh] col-span-1 md:col-span-2 lg:col-span-3 mx-auto max-w-5xl items-center justify-center ">
+                                            Info Not Found
+                                        </div>
+                                    )
+                                ) : (
+                                    <>
+                                        <CardLoading key={7} />
+                                        <CardLoading key={8} />
+                                        <CardLoading key={9} />
+                                    </>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
+
             </div>
         </>
     )
