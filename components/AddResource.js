@@ -77,7 +77,7 @@ const AddResource = ({ updateLoad, setUpdateLoad }) => {
         }
     }, [userInfo, updateLoad]);
     return (
-        <div class="flex flex-col md:basis-[60%] justify-start self-start items-start gap-4 mx-auto pt-10 pb-16 px-4 sm:px-6 md:px-0 w-full">
+        <>
             <div className="" >
                 <h3 className="font-semibold text-start text-xl  md:text-2xl lg:text-3xl " >Add Resource</h3>
                 <p> Contribute to the cause by submitting helpful Resources </p>
@@ -152,7 +152,7 @@ const AddResource = ({ updateLoad, setUpdateLoad }) => {
             <button onClick={handleSubmit} className="flex w-full  bg-[#320760] text-white  items-center text-lg md:text-xl rounded-xl px-4 md:px-6 py-1 md:py-2 flex-col gap-2" >
                 Add Resource
             </button>
-        </div>
+        </>
     );
 }
 

@@ -3,7 +3,7 @@
 import CardLoading from "@/components/CardLoading";
 import { Suspense, useContext, useEffect, useState } from "react"
 import { collection, getDocs } from "firebase/firestore"
-import { LuInfo, LuSearch } from 'react-icons/lu'
+import { LuInfo, LuMailCheck, LuSearch } from 'react-icons/lu'
 import { HiNoSymbol } from 'react-icons/hi2';
 import { db } from '@/util/firebase/config'
 import Footer from "./Footer";
@@ -12,6 +12,9 @@ import { AuthContext } from "@/hooks/AuthContext";
 import Compare from "./Compare";
 import Image from "next/image";
 import Imeg from '@/public/images/curve.png'
+import Ima from '@/public/images/news-bg.svg'
+import Im from '@/public/images/elastic-stack.png'
+import { toast } from "react-toastify";
 
 const IndexPage = () => {
     const [data, setData] = useState([]);
@@ -21,6 +24,7 @@ const IndexPage = () => {
     const [searching, setSearching] = useState(false);
     const [loading, setLoading] = useState(true);
     const [isInputFocused, setIsInputFocused] = useState(false);
+    const [subscribeEmail, setSubscribeEmail] = useState();
     const mTags = [
         'Web', 'Mobile', 'DevOps', 'DS/ML', 'Game', 'Cloud', 'DSA', 'Cybersecurity', 'Design', 'Web3', 'AR-VR', 'System', 'Misc'
     ]
@@ -73,7 +77,7 @@ const IndexPage = () => {
         };
         getDocument();
         setLoading(false);
-    }, []);
+    }, [searchQuery, filterTag]);
 
     const filterSearchBymTag = (filter) => {
         if (filterTag === filter) {
@@ -101,7 +105,6 @@ const IndexPage = () => {
     const searchHandler = (value) => {
         setSearchQuery(value);
         setSearching(true);
-
         setTimeout(() => {
             let res;
             if (value.length !== 0) {
@@ -111,24 +114,35 @@ const IndexPage = () => {
                         obj.title.toLowerCase().includes(text) ||
                         obj.mainTag.toLowerCase().includes(text) ||
                         obj.description.toLowerCase().includes(text) ||
-                        obj.tags.some(tag => tag.toLowerCase().includes(text))
+                        obj.tags.some(tag => tag.toLowerCase().includes(text) || tag.toLowerCase().includes(filterTag?.toLowerCase()))
                     );
                 } else {
                     res = data.filter(obj =>
                         obj.title.toLowerCase().includes(text) ||
                         obj.mainTag.toLowerCase().includes(text) ||
                         obj.description.toLowerCase().includes(text) ||
-                        obj.tags.some(tag => tag.toLowerCase().includes(text))
+                        obj.tags.some(tag => tag.toLowerCase().includes(text) || tag.toLowerCase().includes(filterTag?.toLowerCase()))
                     );
                 }
                 setFilterData(res);
             } else {
                 setFilterData(data);
             }
-
             setSearching(false);
         }, 1000);
     };
+
+    const subscribeHandler = () => {
+        if (subscribeEmail) {
+
+        } else {
+            toast(" Email  Out", {
+                hideProgressBar: true,
+                autoClose: 2000,
+                type: "success",
+            });
+        }
+    }
     return (
         <>
             <div className="min-h-[70vh] bg-[#ffffff]   " >
@@ -151,7 +165,7 @@ const IndexPage = () => {
                     </div>
                     <Compare />
                 </div>
-                <div class="flex flex-col h-full w-full bg-[#100220] relative p-6 xs:p-10 mt-20 xs:mt-28 sm:mt-12 sm:p-16 md:px-20 lg:px-32 items-center justify-center  ">
+                <div class="flex flex-col h-full transition-all duration-300 ease-in-out w-full bg-[#100220] relative p-6 xs:p-10 mt-20 xs:mt-28 sm:mt-12 sm:p-16 md:px-20 lg:px-32 items-center justify-center  ">
                     <div className="absolute -top-[79px] sm:-top-[111px] md:-top-[127px] lg:-top-[143px] right-0 z-10 w-20 h-20 sm:h-28 sm:w-28 md:w-32 md:h-32 lg:h-36 lg:w-36 " >
                         <div class="flex h-full w-full relative ">
                             <Image src={Imeg} fill className=" -scale-x-100  " alt="side1" />
@@ -172,7 +186,7 @@ const IndexPage = () => {
                             <Image src={Imeg} fill className=" -scale-y-100 " alt="side1" />
                         </div>
                     </div>
-                    <div class="flex flex-col space-y-8 items-center justify-center  mb-6 ">
+                    <div class="flex flex-col space-y-8 items-center justify-center w-full mb-6 ">
                         <div className="bg-rose-100 flex rounded-xl items-center relative tems-center shadow-sm foc focus-within:shadow-lg focus-within:shadow-white/20 shadow-white/30 font-medium w-full max-w-md " >
                             <LuSearch className="h-4 w-4 md:h-5 md:w-5 absolute left-2 top-[10px] stroke-[1.5px] z-10 " />
                             <input className="w-full bg-white border border-purple-800 duration-75 transition-all ease-in-out drop-shadow-lg shadow-sm py-1 md:py-2 outline-none pl-10 rounded-lg  " value={searchQuery} onChange={(e) => searchHandler(e.target.value)} onFocus={() => setIsInputFocused(true)}
@@ -249,6 +263,27 @@ const IndexPage = () => {
                             </div>
                         )}
                     </div>
+                </div>
+                <div className="flex flex-col relative h-full w-full items-center justify-center mt-20">
+                    <div className="absolute top-0 z-10 h-full w-full">
+                        <Image src={Ima} width={5000} height={900} alt="newsletter" className="h-full w-full object-contain opacity-50" />
+                    </div>
+                    <div className="flex flex-col items-center justify-center pt-10 space-y-6">
+                        <div className="aspect-square max-w-[100px] relative">
+                            <Image src={Im} fill alt="newsletter img" />
+                        </div>
+                        <div className="w-full font-medium flex flex-col space-y-3 max-w-lg px-10 sm:px-12 md:px-0">
+                            <h4 className="font-semibold text-xl md:text-2xl lg:text-3xl">Newsletter!</h4>
+                            <p>Our Newsletter brings you the latest tech news and repo updates straight to your email every month</p>
+                        </div>
+                    </div>
+                    <form className="flex flex-col items-center justify-center pt-6 w-full">
+                        <div className="flex justify-between items-center bg-white border focus-within:border-gray-900 border-gray-400 rounded-xl px-4 py-1 shadow-lg max-w-sm w-full">
+                            <input type="email" name="newsletter" value={subscribeEmail} onChange={(e) => setSubscribeEmail(e.target.value)} className="bg-white py-2 placeholder:font-light w-full" placeholder="your-email@provider.com" />
+                            <LuMailCheck className="hidden sm:block w-5 h-5 md:h-6 md:w-6 rounded-lg text-violet-400" />
+                        </div>
+                        <button type="submit" className="mt-6 text-white text-base md:text-lg px-4 md:px-6 py-2 font-semibold bg-gradient-to-tr from-violet-400 to-purple-500 rounded-lg flex items-center justify-center">Subscribe!</button>
+                    </form>
                 </div>
 
             </div>

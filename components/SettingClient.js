@@ -80,7 +80,7 @@ const SettingClient = ({ updateLoad, setUpdateLoad }) => {
         }
     }, [userInfo, updateLoad]);
     return (
-        <div class="flex flex-col md:basis-[60%] justify-center md:justify-start self-start items-center md:items-start gap-4 mx-auto pt-10 pb-16 px-4 sm:px-6 md:px-0 w-full ">
+        <div class=" ">
             <div className="hidden md:block" >
                 <h3 className="font-semibold text-start text-xl  md:text-2xl lg:text-3xl " >Profile</h3>
                 <p>Update your profile using below fields </p>

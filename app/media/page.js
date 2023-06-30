@@ -1,8 +1,15 @@
 'use client'
-import MediaPage from "@/components/MediaPage";
-import { useSearchParams, redirect } from 'next/navigation'
-import { useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
 export default function Media() {
-    redirect('/media/video')
+    const router = useRouter();
+
+    useEffect(() => {
+        router.push('/media/video');
+    }, []);
+
+    return null;
 }
+
 

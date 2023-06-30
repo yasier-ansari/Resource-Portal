@@ -16,7 +16,7 @@ import { LuEye, LuEyeOff, LuUserCog } from "react-icons/lu";
 import Link from "next/link";
 
 const ChangePassword = ({ updateLoad, setUpdateLoad }) => {
-    const { userInfo, setUserInfo, authReady } = useContext(AuthContext);
+    const { userInfo, setUserInfo, authReady, typeOfAuth } = useContext(AuthContext);
     const [selectedImage, setSelectedImage] = useState(null);
     const router = useRouter();
     const [type1, setType1] = useState(false)
@@ -79,9 +79,19 @@ const ChangePassword = ({ updateLoad, setUpdateLoad }) => {
     const changeType = (id) => {
         id === 1 ? setType1(!type1) : setType2(!type2)
     }
-
+    useEffect(() => {
+        if (authReady) {
+            if (!userInfo) {
+                router.push('/login')
+            } else {
+                if (typeOfAuth !== "password") {
+                    router.push('/user')
+                }
+            }
+        }
+    })
     return (
-        <form class="flex flex-col md:basis-[60%] justify-start self-start items-start gap-4 mx-auto pt-10 pb-16 px-4 sm:px-6 md:px-0 w-full md:h-[80vh] md:w-[40vw] lg:w-[40vw]  overflow-hidden ">
+        <>
             <div className="" >
                 <h3 className="font-semibold text-start text-xl  md:text-2xl lg:text-3xl " >Password</h3>
                 <p>Change or Reset your Password </p>
@@ -128,8 +138,8 @@ const ChangePassword = ({ updateLoad, setUpdateLoad }) => {
             <button type="submit" onClick={handleSubmit} className="w-[90%] sm:w-[80%]  text-base p-2 font-normal max-w-lg flex md:w-full  bg-[#320760] text-white  items-center  rounded-xl px-4 md:px-6 py-2 flex-col gap-2" >
                 Change Password
             </button>
+        </>
 
-        </form>
     );
 }
 
