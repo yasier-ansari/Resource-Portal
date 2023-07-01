@@ -22,7 +22,7 @@ const Compare = () => {
                                 <LuCircle className="stroke-2  " />
                             </button>
                         </div>
-                        <div class="flex flex-col trasnsition-all duration-300 md:flex-row items-center justify-center md:justify-between px-4 md:px-6 lg:px-10 mt-8 mb-8 space-y-8 md:space-y-0 ">
+                        <div className="flex flex-col trasnsition-all duration-300 md:flex-row items-center justify-center md:justify-between px-4 md:px-6 lg:px-10 mt-8 mb-8 space-y-8 md:space-y-0 ">
                             <div className="h-full w-full xs:w-[90%] sm:w-[85%] md:basis-[40%] lg:basis-[40%] overflow-hidden group group-hover:drop-shadow-sm shadow-gray-200 drop-shadow-md md:w-full rounded-[1.1rem] aspect-[16/12] shadow-lg  border border-violet-200 ">
                                 <Image
                                     src={toggle ? Img : Img2}
