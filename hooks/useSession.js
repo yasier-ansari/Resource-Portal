@@ -16,7 +16,7 @@ export const useSession = () => {
         setError(null);
         setLoading(true)
         try {
-            const res = await signInWithRedirect(auth, githubProvider);
+            const res = await signInWithPopup(auth, githubProvider);
             if (!res) {
                 throw new Error("Could not complete signup");
             }
@@ -127,7 +127,7 @@ export const useSession = () => {
         setLoading(false)
     }
     const loginUserWithGithub = async () => {
-        await signInWithRedirect(auth, githubProvider)
+        await signInWithPopup(auth, githubProvider)
             .then(async (userCredential) => {
                 const rep = await fetchUserProfile(userCredential.user.uid);
                 setSession(rep)

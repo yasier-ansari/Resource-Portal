@@ -21,9 +21,9 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       fontFamily: {
-        out: ['var(--font-out)', 'sans-serif'],
-        sat: ['Satoshi', 'Inter', 'sans-serif'],
-        cal: ['var(--font-cal)', 'sans-serif']
+        out: ['var(--font-out)', 'var(--font-int)'],
+        sat: ['Satoshi', 'var(--font-int)'],
+        int: ['var(--font-int)']
       }
     },
   },

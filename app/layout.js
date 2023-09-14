@@ -1,23 +1,17 @@
 import './globals.css'
 import { AuthContextProvider } from "@/hooks/AuthContext"
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
 import IndexLayout from "@/components/IndexLayout"
-import { configureToast } from "@/util/toast";
-import { DM_Sans, Manrope, Outfit, Red_Hat_Display, Urbanist, Work_Sans } from "next/font/google";
-import localFont from 'next/font/local'
+import { Inter, Outfit } from "next/font/google";
 import siteConfig from "@/util/site";
-
-const cal = localFont({
-  src: "../asset/font/CalSans-SemiBold.woff2",
-  variable: "--font-cal",
-})
 
 const outfit = Outfit({
   variable: "--font-out",
   subsets: ['latin']
 })
-
+const inter = Inter({
+  variable: "--font-int",
+  subsets: ['latin']
+})
 
 export const metadata = {
   title: `${siteConfig.details.title} - ${siteConfig.details.tagLine}`,
@@ -54,7 +48,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`font-s min-h-screen w-full ${cal.variable} ${outfit.className} font-sat text-gray-800 `} >
+      <body className={`font-s min-h-screen w-full ${outfit.className} ${inter.variable} text-gray-800 `} >
         <AuthContextProvider>
           <IndexLayout >
             {children}

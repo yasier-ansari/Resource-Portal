@@ -24,7 +24,6 @@ import Imag from "@/public/images/pfp-place.jpg";
 const Header = () => {
   const { login, session, logout } = useSession();
   const {
-    toggleModal,
     loading,
     userInfo,
     setIsModalVisible,
@@ -34,6 +33,7 @@ const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mediaDropdownOpen, setMediaDropdownOpen] = useState(false);
   const [menuBar, setMenuBar] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const dropdownRef = useRef(null);
   const mediaDropdownRef = useRef(null);
   const mobileRef = useRef(null);
@@ -77,35 +77,29 @@ const Header = () => {
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", (event) =>
-      handleClickOutside(event, dropdownRef, setDropdownOpen)
-    );
-    document.addEventListener("mousedown", (event) =>
-      handleClickOutside(
-        event,
-        mediaDropdownRef,
-        setMediaDropdownOpen
-      )
-    );
-    document.addEventListener("mousedown", (event) =>
-      handleClickOutside(event, mobileRef, setMenuBar)
-    );
+    const handleClickOutsideDropdown = (event) => {
+      handleClickOutside(event, dropdownRef, setDropdownOpen);
+    };
+
+    const handleClickOutsideMediaDropdown = (event) => {
+      handleClickOutside(event, mediaDropdownRef, setMediaDropdownOpen);
+    };
+
+    const handleClickOutsideMobile = (event) => {
+      handleClickOutside(event, mobileRef, setMenuBar);
+    };
+
+    document.addEventListener("mousedown", handleClickOutsideDropdown);
+    document.addEventListener("mousedown", handleClickOutsideMediaDropdown);
+    document.addEventListener("mousedown", handleClickOutsideMobile);
+
     return () => {
-      document.removeEventListener("mousedown", (event) =>
-        handleClickOutside(event, dropdownRef, setDropdownOpen)
-      );
-      document.removeEventListener("mousedown", (event) =>
-        handleClickOutside(
-          event,
-          mediaDropdownRef,
-          setMediaDropdownOpen
-        )
-      );
-      document.addEventListener("mousedown", (event) =>
-        handleClickOutside(event, mobileRef, setMenuBar)
-      );
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
+      document.removeEventListener("mousedown", handleClickOutsideMediaDropdown);
+      document.removeEventListener("mousedown", handleClickOutsideMobile);
     };
   }, []);
+
 
   const loginHandler = async () => {
     await login();
@@ -115,9 +109,22 @@ const Header = () => {
       type: "success",
     });
   };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 150) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
-    <div className="bg-gradient-to-b font-medium from-purple-100  min-h-20 h-full text-gray-800 w-full ">
+    <div className={` sticky top-0 z-40 font-medium  min-h-20 h-full text-gray-800 w-full ${isScrolled ? ' bg-white backdrop-blur-sm bg-opacity-[0.8] shadow-lg  ' : 'bg-gradient-to-b from-purple-100  '} `}>
       <div className="flex justify-between items-center py-4 mx-auto px-4 sm:px-6 md:px-8 lg:px-16 max-w-7xl md:py-6  w-full ">
         <Link href="/" className="text-xl  lg:text-2xl font-bold ">
           <span className="text-[#fa8247]">re;</span>
@@ -259,9 +266,8 @@ const Header = () => {
                             className="rounded-full"
                           />
                           <LuChevronDown
-                            className={` w-4 h-4 transition-all ease-in duration-300 md:h-5 md:w-5 stroke-[1.5px] md:stroke-2 ${
-                              dropdownOpen ? "rotate-180" : ""
-                            } `}
+                            className={` w-4 h-4 transition-all ease-in duration-300 md:h-5 md:w-5 stroke-[1.5px] md:stroke-2 ${dropdownOpen ? "rotate-180" : ""
+                              } `}
                           />
                         </button>
                         {dropdownOpen ? (
@@ -424,20 +430,19 @@ const Header = () => {
                     className="rounded-full"
                   />
                   <LuChevronDown
-                    className={` w-4 h-4 transition-all ease-in duration-300 md:h-5 md:w-5 stroke-[1.5px] md:stroke-2 ${
-                      dropdownOpen ? "rotate-180" : ""
-                    } `}
+                    className={` w-4 h-4 transition-all ease-in duration-300 md:h-5 md:w-5 stroke-[1.5px] md:stroke-2 ${dropdownOpen ? "rotate-180" : ""
+                      } `}
                   />
                 </button>
                 {dropdownOpen ? (
                   <div
-                    ref={dropdownRef}
                     className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg"
                   >
-                    <ul className="p-2 text-start border border-gray-300 rounded-xl ">
+                    <ul ref={dropdownRef}
+                      className="p-2 text-start border border-gray-300 rounded-xl ">
                       <Link
                         href="/user/profile"
-                        className="hover:bg-gray-800 cursor-pointer"
+                        className="hover:bg-gray-800 w-full cursor-pointer"
                       >
                         <button
                           onClick={() => {
@@ -479,13 +484,13 @@ const Header = () => {
               <div className="flex  space-x-5 md:space-x-6 text-base font-semibold  ">
                 <Link
                   href="/login"
-                  className=" bg-purple-100 flex items-center justify-center text-gray-800 shadow-lg border-2 border-purple-400 shadow-stone-300 text-base  rounded-xl px-3 py-1 md:py-2 lg:px-4 "
+                  className=" bg-purple-100 flex items-center justify-center text-gray-800 shadow-md border-2 border-purple-400 shadow-stone-400 text-base  rounded-xl px-3 py-1 md:py-2 lg:px-4 "
                 >
                   Log In
                 </Link>
                 <Link
                   href={"/register"}
-                  className=" bg-gradient-to-r from-purple-400  to-violet-600 text-white shadow-lg border-[0.005rem] border-purple-300 shadow-stone-300 text-base  rounded-xl px-3 py-1 md:py-2 lg:px-4 "
+                  className=" bg-gradient-to-r from-purple-400  to-violet-600 text-white shadow-md border-[0.005rem] border-purple-300 shadow-stone-400 text-base  rounded-xl px-3 py-1 md:py-2 lg:px-4 "
                 >
                   Register
                 </Link>
