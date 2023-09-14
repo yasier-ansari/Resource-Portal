@@ -1,12 +1,10 @@
-'use client'
 import Image from "next/image"
-import { LuAtom, LuGithub } from "react-icons/lu"
 import { SiTailwindcss } from "react-icons/si"
 import { TbBrandFirebase, TbBrandReactNative } from "react-icons/tb"
 
 const Footer = () => {
     return (
-        <div className="relative bg-gradient-to-t from-purple-100/70 ">
+        <footer className="relative bg-gradient-to-t from-purple-100/70 ">
             <div className="flex relative h-full max-w-[80rem] w-full justify-center mx-auto text-gray-800   ">
                 <div className="absolute right-6  -top-4 lg:right-40 lg:-top-6 z-10  rounded-full shadow-lg border-black bg-white ">
                     <Image src='https://cdn.cdnlogo.com/logos/e/21/elastic-stack.svg' width={50} height={50} className=" rounded-full rotate-[25deg] " alt="circular-logo" />
@@ -62,8 +60,10 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-        </div>
-
+            <div class="flex text-sm font-medium text-gray-500 h-full w-full items-center justify-center">
+                <a className="-mt-2 py-1 mb-2 " href="https://github.com/yasier-ansari/re-po">© 2023 Re;po - Licensed under the MIT License</a>
+            </div>
+        </footer>
     )
 }
 

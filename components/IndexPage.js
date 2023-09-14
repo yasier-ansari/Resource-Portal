@@ -136,7 +136,7 @@ const IndexPage = () => {
 
     return (
         <>
-            <div className="min-h-[70vh] bg-[#ffffff]   " >
+            <div className="min-h-[70vh] w-full text-center h-full  " >
                 <MainSection />
                 <div className="flex flex-col h-full transition-all duration-300 ease-in-out w-full bg-[#100220] relative p-6 xs:p-10 mt-20 xs:mt-28 sm:mt-12 sm:p-16 md:px-20 lg:px-32 items-center justify-center  ">
                     <div className="absolute -top-[79px] sm:-top-[111px] md:-top-[127px] lg:-top-[143px] right-0 z-10 w-20 h-20 sm:h-28 sm:w-28 md:w-32 md:h-32 lg:h-36 lg:w-36 " >
@@ -238,7 +238,6 @@ const IndexPage = () => {
                     </div>
                 </div>
                 <Newsletter />
-
             </div>
         </>
     )
